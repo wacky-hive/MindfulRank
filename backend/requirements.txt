@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy
+pymysql
+python-dotenv
+bcrypt
+pydantic[email]
+httpx
+beautifulsoup4
+lxml
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+celery
+redis
+gevent
+stripe 
