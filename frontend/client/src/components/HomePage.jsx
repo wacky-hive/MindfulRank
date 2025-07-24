@@ -879,7 +879,6 @@ const HomePage = () => {
       <TestimonialForm 
         show={showTestimonialForm} 
         onHide={() => setShowTestimonialForm(false)}
-        token={token}
       />
     </>
   );

@@ -239,7 +239,10 @@ const SubscriptionManager = ({ token }) => {
           <div className="row g-4">
             <div className="col-md-6">
               <div className="border rounded p-3" style={{ background: 'var(--neutral-50)' }}>
-                <h6 className="fw-bold mb-3" style={{ color: 'var(--neutral-800)' }}>Current Plan</h6>
+                <h6 className="fw-bold mb-3" style={{ color: 'var(--neutral-800)' }}>
+                  Current Plan
+                  <small className="text-muted fw-normal ms-2">(This is your active subscription)</small>
+                </h6>
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <span className="fw-semibold">{getPlanName(subscription?.subscription_plan)}</span>
                   {getStatusBadge(subscription?.subscription_status)}
@@ -247,7 +250,16 @@ const SubscriptionManager = ({ token }) => {
                 {subscription?.subscription_status === 'active' && subscription?.current_period_end && (
                   <div className="d-flex align-items-center text-muted">
                     <FaCalendarAlt className="me-2" style={{ fontSize: '0.8rem' }} />
-                    <small>Renews on {formatDate(subscription.current_period_end)}</small>
+                    <small>Automatically renews on {formatDate(subscription.current_period_end)}</small>
+                  </div>
+                )}
+                
+                {subscription?.subscription_status === 'active' && (
+                  <div className="mt-2 p-2 rounded" style={{ background: '#f0fdf4', border: '1px solid #16a34a' }}>
+                    <small style={{ color: '#15803d' }}>
+                      <FaCheck className="me-1" />
+                      <strong>All good!</strong> Your subscription is active and you have full access to all platform features.
+                    </small>
                   </div>
                 )}
               </div>
@@ -277,76 +289,138 @@ const SubscriptionManager = ({ token }) => {
                       Choose Your Plan
                     </Button>
                     
-                    <Button
-                      onClick={handleSyncSubscription}
-                      variant="outline-info"
-                      className="fw-semibold w-100"
-                      disabled={syncLoading}
-                      style={{ borderRadius: 'var(--radius-md)' }}
-                    >
-                      {syncLoading ? (
-                        <FaSpinner className="fa-spin react-icon icon-left" />
-                      ) : (
-                        <FaInfoCircle className="react-icon icon-left" />
-                      )}
-                      Sync Subscription Status
-                    </Button>
+                    <div className="mt-3 p-4 rounded" style={{ 
+                      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)', 
+                      border: '2px solid #0ea5e9',
+                      position: 'relative'
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: '-1px',
+                        left: '1rem',
+                        background: '#0ea5e9',
+                        color: 'white',
+                        padding: '0.25rem 0.75rem',
+                        borderRadius: '0 0 8px 8px',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold'
+                      }}>
+                        💡 HELP
+                      </div>
+                      
+                      <div className="mt-2">
+                        <h6 className="fw-bold mb-2" style={{ color: '#0369a1' }}>
+                          <FaInfoCircle className="me-2" />
+                          What does "Refresh Subscription Status" do?
+                        </h6>
+                        
+                        <div className="mb-3" style={{ fontSize: '0.9rem', color: '#0369a1' }}>
+                          <div className="mb-2">
+                            <strong>🔄 This button checks with our payment system</strong> to see if your subscription is now active.
+                          </div>
+                          
+                          <div className="mb-2">
+                            <strong>⏰ Use it when:</strong>
+                            <ul className="mb-0 mt-1" style={{ paddingLeft: '1.2rem' }}>
+                              <li>You just completed a payment</li>
+                              <li>Your subscription should be active but shows as inactive</li>
+                              <li>You want to double-check your current plan status</li>
+                            </ul>
+                          </div>
+                          
+                          <div className="mb-2">
+                            <strong>✨ What happens:</strong> We contact Stripe (our payment processor) to get your latest subscription information and update your account.
+                          </div>
+                        </div>
+                        
+                        <Button
+                          onClick={handleSyncSubscription}
+                          variant="primary"
+                          className="fw-semibold w-100"
+                          disabled={syncLoading}
+                          style={{ 
+                            borderRadius: 'var(--radius-md)',
+                            background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+                            border: 'none',
+                            padding: '0.75rem'
+                          }}
+                        >
+                          {syncLoading ? (
+                            <>
+                              <FaSpinner className="fa-spin react-icon icon-left" />
+                              Checking with payment system...
+                            </>
+                          ) : (
+                            <>
+                              <FaInfoCircle className="react-icon icon-left" />
+                              Refresh My Subscription Status
+                            </>
+                          )}
+                        </Button>
+                        
+                        <small className="text-muted d-block mt-2 text-center">
+                          💳 This is safe to use - it only reads your payment information
+                        </small>
+                      </div>
+                    </div>
                   </>
                 ) : subscription?.subscription_status === 'active' ? (
                   <div className="d-grid gap-2">
-                    <Button
-                      onClick={() => setShowUpgradeModal(true)}
-                      variant="outline-primary"
-                      className="fw-semibold"
-                      style={{ borderRadius: 'var(--radius-md)' }}
-                    >
-                      <FaArrowUp className="react-icon icon-left" />
-                      Change Plan
-                    </Button>
-                    <Button
-                      onClick={handleCancelSubscription}
-                      variant="outline-danger"
-                      className="fw-semibold"
-                      disabled={cancelLoading}
-                      style={{ borderRadius: 'var(--radius-md)' }}
-                    >
-                      {cancelLoading ? (
-                        <FaSpinner className="fa-spin react-icon icon-left" />
-                      ) : (
-                        <FaTimes className="react-icon icon-left" />
-                      )}
-                      Cancel Subscription
-                    </Button>
-                    <Button
-                      onClick={handleSyncSubscription}
-                      variant="outline-info"
-                      className="fw-semibold"
-                      disabled={syncLoading}
-                      style={{ borderRadius: 'var(--radius-md)' }}
-                    >
-                      {syncLoading ? (
-                        <FaSpinner className="fa-spin react-icon icon-left" />
-                      ) : (
-                        <FaInfoCircle className="react-icon icon-left" />
-                      )}
-                      Sync Status
-                    </Button>
+                    <div>
+                      <Button
+                        onClick={() => setShowUpgradeModal(true)}
+                        variant="outline-primary"
+                        className="fw-semibold w-100"
+                        style={{ borderRadius: 'var(--radius-md)' }}
+                      >
+                        <FaArrowUp className="react-icon icon-left" />
+                        Upgrade or Downgrade Plan
+                      </Button>
+                      <small className="text-muted d-block mt-1 text-center">
+                        💡 Switch to a different plan that better fits your needs
+                      </small>
+                    </div>
+                    
+                    <div>
+                      <Button
+                        onClick={handleCancelSubscription}
+                        variant="outline-danger"
+                        className="fw-semibold w-100"
+                        disabled={cancelLoading}
+                        style={{ borderRadius: 'var(--radius-md)' }}
+                      >
+                        {cancelLoading ? (
+                          <FaSpinner className="fa-spin react-icon icon-left" />
+                        ) : (
+                          <FaTimes className="react-icon icon-left" />
+                        )}
+                        Cancel Subscription
+                      </Button>
+                      <small className="text-muted d-block mt-1 text-center">
+                        ⚠️ You'll keep access until your current billing period ends
+                      </small>
+                    </div>
                   </div>
                 ) : subscription?.subscription_status === 'canceled' && (
-                  <Button
-                    onClick={handleReactivateSubscription}
-                    variant="success"
-                    className="fw-semibold w-100"
-                    disabled={reactivateLoading}
-                    style={{ borderRadius: 'var(--radius-md)' }}
-                  >
-                    {reactivateLoading ? (
-                      <FaSpinner className="fa-spin react-icon icon-left" />
-                    ) : (
-                      <FaCheck className="react-icon icon-left" />
-                    )}
-                    Reactivate Subscription
-                  </Button>
+                  <div>
+                    <Button
+                      onClick={handleReactivateSubscription}
+                      variant="success"
+                      className="fw-semibold w-100"
+                      disabled={reactivateLoading}
+                      style={{ borderRadius: 'var(--radius-md)' }}
+                    >
+                      {reactivateLoading ? (
+                        <FaSpinner className="fa-spin react-icon icon-left" />
+                      ) : (
+                        <FaCheck className="react-icon icon-left" />
+                      )}
+                      Reactivate Subscription
+                    </Button>
+                    <small className="text-muted d-block mt-1 text-center">
+                      ✅ Resume your subscription and regain full access to all features
+                    </small>
+                  </div>
                 )}
               </div>
             </div>

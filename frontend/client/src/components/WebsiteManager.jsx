@@ -788,9 +788,13 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
               size="sm"
               onClick={fetchWebsites}
               className="fw-semibold"
-              style={{ borderRadius: 'var(--radius-md)' }}
+              style={{ 
+                borderRadius: 'var(--radius-md)',
+                padding: '0.5rem 1rem'
+              }}
             >
-                                          <FaSync className="react-icon icon-left-sm" />Refresh All
+              <FaSync className="react-icon icon-left-sm" />
+              Refresh All
             </Button>
           )}
         </div>
@@ -845,9 +849,13 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
                         size="sm"
                         onClick={() => fetchLlmFiles(site.id)}
                         className="fw-semibold"
-                        style={{ borderRadius: 'var(--radius-md)' }}
+                        style={{ 
+                          borderRadius: 'var(--radius-md)',
+                          padding: '0.5rem 1rem'
+                        }}
                       >
-                                                    <FaSync className="react-icon icon-left-sm" />Refresh Files
+                        <FaSync className="react-icon icon-left-sm" />
+                        Refresh Files
                       </Button>
                       <Button 
                         size="sm"
@@ -856,10 +864,12 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
                         style={{ 
                           borderRadius: 'var(--radius-md)',
                           background: 'linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%)',
-                          border: 'none'
+                          border: 'none',
+                          padding: '0.5rem 1rem'
                         }}
                       >
-                                                        <FaCogs className="react-icon icon-left-sm" />Generate Files
+                        <FaCogs className="react-icon icon-left-sm" />
+                        Generate Files
                       </Button>
                     </div>
 

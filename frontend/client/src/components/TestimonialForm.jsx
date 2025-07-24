@@ -3,7 +3,7 @@ import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { FaStar, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import axiosInstance from '../api/axiosInstance';
 
-const TestimonialForm = ({ show, onHide, token }) => {
+const TestimonialForm = ({ show, onHide }) => {
   const [rating, setRating] = useState(5);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [testimonial, setTestimonial] = useState('');
