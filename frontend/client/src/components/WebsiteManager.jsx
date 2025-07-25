@@ -168,7 +168,10 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                                 onClick={handleAutoDiscover}
                                 disabled={isDiscovering || isLoading}
                                 className="fw-semibold"
-                                style={{ borderRadius: 'var(--radius-md)' }}
+                                style={{ 
+                                    borderRadius: 'var(--radius-md)',
+                                    padding: '0.5rem 1rem'
+                                }}
                             >
                                 {isDiscovering ? (
                                     <>
@@ -253,7 +256,10 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                             variant="outline-primary" 
                             onClick={handleAddPage}
                             className="fw-semibold"
-                            style={{ borderRadius: 'var(--radius-md)' }}
+                            style={{ 
+                                borderRadius: 'var(--radius-md)',
+                                padding: '0.5rem 1rem'
+                            }}
                         >
                             <FaPlus className="react-icon icon-left" />Add Page
                         </Button>
@@ -295,7 +301,10 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                             variant="outline-primary" 
                             onClick={handleAddUrl}
                             className="fw-semibold"
-                            style={{ borderRadius: 'var(--radius-md)' }}
+                            style={{ 
+                                borderRadius: 'var(--radius-md)',
+                                padding: '0.5rem 1rem'
+                            }}
                         >
                             <FaPlus className="react-icon icon-left" />Add URL
                         </Button>
@@ -313,7 +322,10 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                                 size="sm"
                                 onClick={() => setShowPreview(!showPreview)}
                                 className="fw-semibold"
-                                style={{ borderRadius: 'var(--radius-sm)' }}
+                                style={{ 
+                                    borderRadius: 'var(--radius-sm)',
+                                    padding: '0.5rem 1rem'
+                                }}
                             >
                                 {showPreview ? (
                                     <>
@@ -587,7 +599,19 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
   };
 
   const handleDeleteWebsite = async (websiteId, websiteName) => {
-    if (!window.confirm(`Are you sure you want to delete "${websiteName}"? This action cannot be undone.`)) {
+    const result = await Swal.fire({
+      title: 'Delete Website?',
+      html: `Are you sure you want to delete <strong>"${websiteName}"</strong>?<br><br>This action cannot be undone and will delete all associated files.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, Delete Website',
+      cancelButtonText: 'Cancel',
+      focusCancel: true
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
     
@@ -595,8 +619,13 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
     try {
       await axiosInstance.delete(`/websites/${websiteId}`);
       
-      setMessage('Website deleted successfully!');
-      setMessageType('success');
+      await Swal.fire({
+        title: 'Website Deleted!',
+        text: `"${websiteName}" has been successfully deleted.`,
+        icon: 'success',
+        confirmButtonColor: '#28a745'
+      });
+      
       fetchWebsites(); // Refresh the list
       
       // Refresh stats after deletion
@@ -605,15 +634,31 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
       }
     } catch (error) {
       console.error('Error deleting website:', error);
-      setMessage('Failed to delete website. Please try again.');
-      setMessageType('danger');
+      await Swal.fire({
+        title: 'Deletion Failed',
+        text: 'Failed to delete website. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#dc3545'
+      });
     } finally {
       setDeletingWebsiteId(null);
     }
   };
 
   const handleDeleteFile = async (fileId, websiteId, fileName) => {
-    if (!window.confirm(`Are you sure you want to delete "${fileName}"? This action cannot be undone.`)) {
+    const result = await Swal.fire({
+      title: 'Delete File?',
+      html: `Are you sure you want to delete <strong>"${fileName}"</strong>?<br><br>This action cannot be undone.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, Delete File',
+      cancelButtonText: 'Cancel',
+      focusCancel: true
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
     
@@ -621,8 +666,12 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
     try {
       await axiosInstance.delete(`/llm-files/${fileId}`);
       
-      setMessage('File deleted successfully!');
-      setMessageType('success');
+      await Swal.fire({
+        title: 'File Deleted!',
+        text: `"${fileName}" has been successfully deleted.`,
+        icon: 'success',
+        confirmButtonColor: '#28a745'
+      });
       
       // Refresh the files for this website
       fetchLlmFiles(websiteId);
@@ -633,8 +682,12 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
       }
     } catch (error) {
       console.error('Error deleting file:', error);
-      setMessage('Failed to delete file. Please try again.');
-      setMessageType('danger');
+      await Swal.fire({
+        title: 'Deletion Failed',
+        text: 'Failed to delete file. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#dc3545'
+      });
     } finally {
       setDeletingFileId(null);
     }

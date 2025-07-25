@@ -64,6 +64,13 @@ const Navigation = ({ token, onLogout }) => {
             </Nav.Link>
             <Nav.Link 
               as={Link} 
+              to="/documentation" 
+              className="fw-semibold px-3 py-2 mx-1 rounded-pill nav-link-modern"
+            >
+              How to Use
+            </Nav.Link>
+            <Nav.Link 
+              as={Link} 
               to="/pricing" 
               className="fw-semibold px-3 py-2 mx-1 rounded-pill nav-link-modern"
             >
