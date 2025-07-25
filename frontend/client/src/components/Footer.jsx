@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import { FaBrain, FaEnvelope, FaPhone, FaHeart } from 'react-icons/fa';
+import { FaBrain, FaEnvelope, FaHeart } from 'react-icons/fa';
 
 const Footer = () => {
   const { isDark } = useTheme();
@@ -29,47 +29,7 @@ const Footer = () => {
                 Optimize your website content for AI language models with our automated platform. 
                 Generate LLM-friendly files that boost discoverability.
               </p>
-              <div className="d-flex gap-3">
-                <a 
-                  href="#" 
-                  className="text-decoration-none"
-                  style={{ 
-                    color: 'var(--neutral-300)',
-                    fontSize: '1.25rem',
-                    transition: 'all var(--transition-base)'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = 'var(--primary-400)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--neutral-300)'}
-                >
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a 
-                  href="#" 
-                  className="text-decoration-none"
-                  style={{ 
-                    color: 'var(--neutral-300)',
-                    fontSize: '1.25rem',
-                    transition: 'all var(--transition-base)'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = 'var(--primary-400)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--neutral-300)'}
-                >
-                  <i className="fab fa-github"></i>
-                </a>
-                <a 
-                  href="#" 
-                  className="text-decoration-none"
-                  style={{ 
-                    color: 'var(--neutral-300)',
-                    fontSize: '1.25rem',
-                    transition: 'all var(--transition-base)'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = 'var(--primary-400)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--neutral-300)'}
-                >
-                  <i className="fab fa-linkedin"></i>
-                </a>
-              </div>
+
             </div>
           </Col>
 
@@ -244,12 +204,7 @@ const Footer = () => {
                 support@mindfulrank.com
               </span>
             </div>
-            <div className="mb-2">
-              <FaPhone className="react-icon icon-left" style={{ color: 'var(--primary-400)' }} />
-              <span style={{ fontSize: '0.9rem', color: 'var(--neutral-300)' }}>
-                +1 (555) 123-4567
-              </span>
-            </div>
+
           </Col>
         </Row>
 
