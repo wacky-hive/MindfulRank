@@ -370,6 +370,137 @@ const PricingPage = () => {
         </Container>
       </section>
 
+      {/* Auto-Discovery Limits Highlight */}
+      <section style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)', padding: '3rem 0' }}>
+        <Container style={{ maxWidth: '1400px' }}>
+          <Row className="justify-content-center text-center mb-4">
+            <Col lg={8}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: 'rgba(102, 126, 234, 0.1)',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '50px',
+                marginBottom: '1.5rem',
+                color: 'var(--primary-600)'
+              }}>
+                <FaMagic className="me-2" style={{ fontSize: '1.1rem' }} />
+                <span className="fw-semibold">Auto-Discovery Limits</span>
+              </div>
+              
+              <h2 className="display-6 fw-bold mb-3" style={{ color: 'var(--neutral-900)' }}>
+                Smart Page Discovery by Plan
+              </h2>
+              <p className="lead mb-5" style={{ color: 'var(--neutral-600)' }}>
+                Our AI automatically discovers and analyzes your website pages. Choose the plan that fits your website size.
+              </p>
+            </Col>
+          </Row>
+          
+          <Row className="g-4 justify-content-center">
+            <Col lg={4} md={6}>
+              <Card style={{
+                borderRadius: '15px',
+                border: '2px solid #10b981',
+                background: 'white',
+                boxShadow: '0 10px 30px rgba(16, 185, 129, 0.15)',
+                textAlign: 'center',
+                padding: '2rem'
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem'
+                }}>
+                  <FaRocket style={{ fontSize: '1.5rem', color: 'white' }} />
+                </div>
+                <h4 className="fw-bold mb-2" style={{ color: 'var(--neutral-900)' }}>Starter</h4>
+                <div className="display-6 fw-bold text-success mb-2">100</div>
+                <p className="text-muted mb-0">Pages per website</p>
+                <small className="text-muted">Perfect for small to medium websites</small>
+              </Card>
+            </Col>
+            
+            <Col lg={4} md={6}>
+              <Card style={{
+                borderRadius: '15px',
+                border: '2px solid var(--primary-500)',
+                background: 'white',
+                boxShadow: '0 10px 30px rgba(102, 126, 234, 0.2)',
+                textAlign: 'center',
+                padding: '2rem',
+                position: 'relative'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+                  color: '#333',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '20px',
+                  fontSize: '0.8rem',
+                  fontWeight: '700',
+                  boxShadow: '0 4px 12px rgba(255, 215, 0, 0.3)',
+                  zIndex: 10
+                }}>
+                  ⭐ POPULAR
+                </div>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%)',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem'
+                }}>
+                  <FaCrown style={{ fontSize: '1.5rem', color: 'white' }} />
+                </div>
+                <h4 className="fw-bold mb-2" style={{ color: 'var(--neutral-900)' }}>Professional</h4>
+                <div className="display-6 fw-bold text-primary mb-2">300</div>
+                <p className="text-muted mb-0">Pages per website</p>
+                <small className="text-muted">Ideal for growing businesses</small>
+              </Card>
+            </Col>
+            
+            <Col lg={4} md={6}>
+              <Card style={{
+                borderRadius: '15px',
+                border: '2px solid #f59e0b',
+                background: 'white',
+                boxShadow: '0 10px 30px rgba(245, 158, 11, 0.15)',
+                textAlign: 'center',
+                padding: '2rem'
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem'
+                }}>
+                  <FaGem style={{ fontSize: '1.5rem', color: 'white' }} />
+                </div>
+                <h4 className="fw-bold mb-2" style={{ color: 'var(--neutral-900)' }}>Enterprise</h4>
+                <div className="display-6 fw-bold text-warning mb-2">∞</div>
+                <p className="text-muted mb-0">Unlimited pages</p>
+                <small className="text-muted">For large-scale websites</small>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
       {/* Dynamic Pricing Plans */}
       <section style={{ background: 'white', padding: '4rem 0' }}>
         <Container style={{ maxWidth: '1400px' }}>
@@ -670,6 +801,66 @@ const PricingPage = () => {
                       </h5>
                       <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
                         Benefits include increased traffic, higher search engine rankings, better user engagement, and improved conversion rates. AI optimization is particularly valuable for complex, niche, or rapidly evolving industries.
+                      </p>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            
+            <Col md={6}>
+              <Card className="h-100 card-modern">
+                <Card.Body style={{ padding: '2rem' }}>
+                  <div className="d-flex align-items-start mb-3">
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'var(--primary-100)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '1rem',
+                      flexShrink: 0
+                    }}>
+                      <FaMagic className="react-icon" style={{ color: 'var(--primary-600)' }} />
+                    </div>
+                    <div>
+                      <h5 className="fw-bold mb-3" style={{ color: 'var(--neutral-900)' }}>
+                        How does Auto-Discovery work?
+                      </h5>
+                      <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
+                        Auto-Discovery automatically scans your website and finds all important pages. Starter plan discovers up to 100 pages, Professional up to 300 pages, and Enterprise has unlimited discovery. Perfect for saving hours of manual work!
+                      </p>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            
+            <Col md={6}>
+              <Card className="h-100 card-modern">
+                <Card.Body style={{ padding: '2rem' }}>
+                  <div className="d-flex align-items-start mb-3">
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'var(--primary-100)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '1rem',
+                      flexShrink: 0
+                    }}>
+                      <FaRocket className="react-icon" style={{ color: 'var(--primary-600)' }} />
+                    </div>
+                    <div>
+                      <h5 className="fw-bold mb-3" style={{ color: 'var(--neutral-900)' }}>
+                        Can I upgrade my plan later?
+                      </h5>
+                      <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
+                        Yes! You can upgrade your plan at any time to get higher auto-discovery limits and additional features. Your billing will be prorated, so you only pay for the difference.
                       </p>
                     </div>
                   </div>

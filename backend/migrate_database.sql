@@ -48,6 +48,21 @@ CREATE TABLE IF NOT EXISTS subscription_history (
     INDEX idx_action (action)
 );
 
+-- Add file_size column to llm_files table
+ALTER TABLE llm_files ADD COLUMN file_size INTEGER;
+
+-- Update existing files with calculated sizes
+UPDATE llm_files 
+SET file_size = (
+    SELECT LENGTH(LOAD_FILE(content_path))
+    FROM llm_files l2 
+    WHERE l2.id = llm_files.id 
+    AND l2.content_path != 'pending'
+    AND l2.status = 'generated'
+)
+WHERE content_path != 'pending' 
+AND status = 'generated';
+
 -- Verify migration completed successfully
 SELECT 'Migration completed successfully!' as status;
 SHOW TABLES; 

@@ -104,18 +104,45 @@ def get_llm_files_by_website(db: Session, website_id: int, skip: int = 0, limit:
     """
     return db.query(models.LLMFile).filter(models.LLMFile.website_id == website_id).offset(skip).limit(limit).all()
 
-def update_llm_file_status(db: Session, llm_file_id: int, new_status: str, content_path: Optional[str] = None):
+def calculate_file_size(file_path: str) -> Optional[int]:
     """
-    Updates the status and optionally the content path of an LLMFile.
+    Calculate the size of a file in bytes.
+    Returns None if file doesn't exist or error occurs.
     """
-    db_llm_file = db.query(models.LLMFile).filter(models.LLMFile.id == llm_file_id).first()
-    if db_llm_file:
-        db_llm_file.status = new_status
+    try:
+        import os
+        if os.path.exists(file_path):
+            return os.path.getsize(file_path)
+        return None
+    except Exception as e:
+        print(f"Error calculating file size for {file_path}: {e}")
+        return None
+
+def update_llm_file_status(db: Session, file_id: int, status: str, content_path: str = None) -> bool:
+    """
+    Update the status and optionally the content path of an LLM file.
+    Also calculates and stores the file size if the file exists.
+    """
+    try:
+        llm_file = db.query(models.LLMFile).filter(models.LLMFile.id == file_id).first()
+        if not llm_file:
+            return False
+        
+        llm_file.status = status
         if content_path:
-            db_llm_file.content_path = content_path
+            llm_file.content_path = content_path
+            
+            # Calculate and store file size if file exists
+            if status == 'generated' and content_path != 'pending':
+                file_size = calculate_file_size(content_path)
+                llm_file.file_size = file_size
+        
         db.commit()
-        db.refresh(db_llm_file)
-    return db_llm_file
+        return True
+    except Exception as e:
+        print(f"Error updating LLM file status: {e}")
+        db.rollback()
+        return False
 
 def delete_llm_file(db: Session, file_id: int) -> bool:
     """

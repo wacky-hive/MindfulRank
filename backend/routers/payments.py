@@ -28,8 +28,10 @@ SUBSCRIPTION_PLANS = [
         "price": 1900,  # €19.00 in cents
         "interval": "year",
         "stripe_price_id": os.getenv("STRIPE_STARTER_PRICE_ID", "price_1Ro0ILJqPMD8922QvDfxlI9w"),  # Configurable Stripe price ID
+        "auto_discovery_limit": 100,  # Pages per website
         "features": [
             "Up to 5 websites",
+            "100 auto-discovery pages per website",
             "100 requests/hour",
             "1,000 requests/day",
             "Email support",
@@ -42,8 +44,10 @@ SUBSCRIPTION_PLANS = [
         "price": 4900,  # €49.00 in cents
         "interval": "year",
         "stripe_price_id": os.getenv("STRIPE_PROFESSIONAL_PRICE_ID", "price_1Ro0IyJqPMD8922QLiGPxWGe"),  # Configurable Stripe price ID
+        "auto_discovery_limit": 300,  # Pages per website
         "features": [
             "Up to 25 websites",
+            "300 auto-discovery pages per website",
             "500 requests/hour", 
             "10,000 requests/day",
             "Priority email support",
@@ -56,8 +60,10 @@ SUBSCRIPTION_PLANS = [
         "price": 9900,  # €99.00 in cents
         "interval": "year",
         "stripe_price_id": os.getenv("STRIPE_ENTERPRISE_PRICE_ID", "price_1Ro0JFJqPMD8922Qck6M42Tt"),  # Configurable Stripe price ID
+        "auto_discovery_limit": -1,  # Unlimited (-1 represents unlimited)
         "features": [
             "Unlimited websites",
+            "Unlimited auto-discovery pages per website",
             "2,000 requests/hour",
             "50,000 requests/day", 
             "White-label options",
@@ -65,6 +71,18 @@ SUBSCRIPTION_PLANS = [
         ]
     }
 ]
+
+def get_auto_discovery_limit(subscription_plan: str) -> int:
+    """
+    Get the auto-discovery page limit for a given subscription plan.
+    Returns -1 for unlimited.
+    """
+    for plan in SUBSCRIPTION_PLANS:
+        if plan["id"] == subscription_plan:
+            return plan["auto_discovery_limit"]
+    
+    # Default to starter plan limit if plan not found
+    return 100
 
 def requires_active_subscription(current_user: models.User):
     """

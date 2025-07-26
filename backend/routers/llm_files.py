@@ -10,7 +10,7 @@ import json
 
 import crud, schemas, models, database, auth
 from services import content_processor
-from routers.payments import requires_active_subscription
+from routers.payments import requires_active_subscription, get_auto_discovery_limit
 
 router = APIRouter(
     prefix="/llm-files",
@@ -92,6 +92,52 @@ def generate_llm_files_for_website(
         crud.update_llm_file_status(db, llms_full_txt_record.id, 'generated', str(llms_full_txt_path))
      
         return {"message": "LLM files generated successfully."}
+    
+    except Exception as e:
+        print(f"Error generating LLM files: {e}")
+        raise HTTPException(status_code=500, detail=f"Error generating files: {str(e)}")
+
+@router.post("/websites/{website_id}/update-file-sizes", status_code=200)
+def update_file_sizes_for_website(
+    website_id: int = FastApiPath(...),
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """
+    Update file sizes for all generated files of a website.
+    """
+    # Check if user has active subscription
+    requires_active_subscription(current_user)
+    
+    # Check if the website exists and belongs to the current user
+    website = crud.get_website(db, website_id=website_id)
+    if not website:
+        raise HTTPException(status_code=404, detail="Website not found")
+    if website.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to access this website")
+    
+    try:
+        # Get all generated files for this website
+        llm_files = crud.get_llm_files_by_website(db, website_id=website_id)
+        updated_count = 0
+        
+        for llm_file in llm_files:
+            if llm_file.status == 'generated' and llm_file.content_path != 'pending':
+                file_size = crud.calculate_file_size(llm_file.content_path)
+                if file_size is not None and llm_file.file_size != file_size:
+                    llm_file.file_size = file_size
+                    updated_count += 1
+        
+        db.commit()
+        
+        return {
+            "message": f"Updated file sizes for {updated_count} files",
+            "updated_count": updated_count
+        }
+        
+    except Exception as e:
+        print(f"Error updating file sizes: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating file sizes: {str(e)}")
 
     except Exception as e:
         print(f"An error occurred during file generation for website {website_id}: {e}")
@@ -181,7 +227,11 @@ async def auto_discover_website_pages(
 ):
     """
     Auto-discover pages on a website and return suggested titles and descriptions.
+    Page limit is based on user's subscription plan.
     """
+    # Check if user has active subscription
+    requires_active_subscription(current_user)
+    
     # Verify the website belongs to the current user
     website = crud.get_website(db, website_id=website_id)
     if not website:
@@ -190,19 +240,31 @@ async def auto_discover_website_pages(
     if website.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to access this website")
     
+    # Get auto-discovery limit based on subscription plan
+    max_pages = get_auto_discovery_limit(current_user.subscription_plan)
+    
     try:
         # Auto-discover pages on the website
         discovered_pages = await content_processor.auto_discover_pages(
             root_url=website.root_url,
-            max_pages=15
+            max_pages=max_pages
         )
         
         if not discovered_pages:
             raise HTTPException(status_code=404, detail="No pages could be discovered on this website")
         
+        # Prepare response message based on plan
+        plan_name = current_user.subscription_plan.capitalize()
+        limit_text = "unlimited" if max_pages == -1 else f"{max_pages}"
+        
         return {
-            "message": f"Discovered {len(discovered_pages)} pages",
-            "pages": discovered_pages
+            "message": f"Discovered {len(discovered_pages)} pages (Plan: {plan_name}, Limit: {limit_text} pages)",
+            "pages": discovered_pages,
+            "plan_info": {
+                "plan": current_user.subscription_plan,
+                "limit": max_pages,
+                "pages_discovered": len(discovered_pages)
+            }
         }
         
     except Exception as e:

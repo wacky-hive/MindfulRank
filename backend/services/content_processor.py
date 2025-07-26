@@ -37,6 +37,7 @@ async def scrape_and_flatten_html(url: str) -> Optional[str]:
 async def auto_discover_pages(root_url: str, max_pages: int = 15) -> List[Dict[str, str]]:
     """
     Auto-discovers pages on a website and extracts their titles and descriptions.
+    max_pages: -1 for unlimited, otherwise the maximum number of pages to discover
     """
     discovered_pages = []
     visited_urls = set()
@@ -45,8 +46,11 @@ async def auto_discover_pages(root_url: str, max_pages: int = 15) -> List[Dict[s
     # Parse the root domain to only crawl same-domain URLs
     root_domain = urlparse(root_url).netloc
     
+    # Check if unlimited crawling is requested
+    is_unlimited = max_pages == -1
+    
     async with httpx.AsyncClient() as client:
-        while urls_to_visit and len(discovered_pages) < max_pages:
+        while urls_to_visit and (is_unlimited or len(discovered_pages) < max_pages):
             current_url = urls_to_visit.pop(0)
             
             # Skip if already visited
@@ -90,8 +94,8 @@ async def auto_discover_pages(root_url: str, max_pages: int = 15) -> List[Dict[s
                     "description": description
                 })
                 
-                # Find more URLs to visit (only if we need more pages)
-                if len(discovered_pages) < max_pages:
+                # Find more URLs to visit (only if we need more pages or unlimited)
+                if is_unlimited or len(discovered_pages) < max_pages:
                     links = soup.find_all('a', href=True)
                     for link in links:
                         href = link['href']

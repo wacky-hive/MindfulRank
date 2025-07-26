@@ -40,6 +40,8 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
             const response = await axiosInstance.post(`/llm-files/websites/${websiteId}/auto-discover`, {});
             
             const discoveredPages = response.data.pages;
+            const planInfo = response.data.plan_info;
+            
             if (discoveredPages && discoveredPages.length > 0) {
                 // Set the discovered pages to the form
                 setPages(discoveredPages);
@@ -48,10 +50,21 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                 const urls = discoveredPages.slice(0, 5).map(page => page.url);
                 setUrlsToFlatten(urls);
                 
+                // Show success message with plan info
+                const limitText = planInfo.limit === -1 ? 'unlimited' : planInfo.limit;
+                const planName = planInfo.plan.charAt(0).toUpperCase() + planInfo.plan.slice(1);
+                
                 await Swal.fire({
                     icon: 'success',
                     title: 'Pages Discovered! 🎉',
-                    text: `Auto-discovered ${discoveredPages.length} pages! You can edit or remove any pages before generating.`,
+                    html: `
+                        <div style="text-align: left;">
+                            <p><strong>Auto-discovered ${discoveredPages.length} pages!</strong></p>
+                            <p><strong>Your Plan:</strong> ${planName}</p>
+                            <p><strong>Page Limit:</strong> ${limitText} pages per website</p>
+                            <p>You can edit or remove any pages before generating.</p>
+                        </div>
+                    `,
                     confirmButtonColor: '#198754'
                 });
             } else {
@@ -64,10 +77,20 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
             }
         } catch (error) {
             console.error("Auto-discovery failed:", error);
+            
+            let errorMessage = 'Failed to auto-discover pages. Please try again or add pages manually.';
+            
+            // Handle subscription-related errors
+            if (error.response?.status === 402) {
+                errorMessage = 'Active subscription required. Please upgrade your plan to use auto-discovery.';
+            } else if (error.response?.data?.detail) {
+                errorMessage = error.response.data.detail;
+            }
+            
             await Swal.fire({
                 icon: 'error',
                 title: 'Discovery Failed',
-                text: 'Failed to auto-discover pages. Please try again or add pages manually.',
+                text: errorMessage,
                 confirmButtonColor: '#dc3545'
             });
         } finally {
@@ -493,6 +516,22 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
     try {
         const response = await axiosInstance.get(`/llm-files/websites/${websiteId}`);
         setLlmFiles(prev => ({...prev, [websiteId]: response.data}));
+        
+        // Update file sizes for existing files that don't have size info
+        const filesWithoutSize = response.data.filter(file => 
+          file.status === 'generated' && (!file.file_size || file.file_size === 0)
+        );
+        
+        if (filesWithoutSize.length > 0) {
+          try {
+            await axiosInstance.post(`/llm-files/websites/${websiteId}/update-file-sizes`);
+            // Refresh the files to get updated sizes
+            const updatedResponse = await axiosInstance.get(`/llm-files/websites/${websiteId}`);
+            setLlmFiles(prev => ({...prev, [websiteId]: updatedResponse.data}));
+          } catch (updateError) {
+            console.error('Error updating file sizes:', updateError);
+          }
+        }
     } catch (error) {
         console.error(`Failed to fetch LLM files for website ${websiteId}`, error);
     }
@@ -703,12 +742,20 @@ const WebsiteManager = ({ token, onStatsUpdate }) => {
   };
 
   const getFileSize = (file) => {
-    // Mock file size - in a real app this would come from the backend
-    const sizes = {
-      'llms.txt': '2.3 KB',
-      'llms_full.txt': '45.7 KB'
-    };
-    return sizes[file.file_type] || '0 KB';
+    // Use real file size from backend if available
+    if (file.file_size && file.file_size > 0) {
+      const bytes = file.file_size;
+      if (bytes < 1024) {
+        return `${bytes} B`;
+      } else if (bytes < 1024 * 1024) {
+        return `${(bytes / 1024).toFixed(1)} KB`;
+      } else {
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+      }
+    }
+    
+    // Fallback for files without size info
+    return 'Calculating...';
   };
 
   const formatDate = (dateString) => {

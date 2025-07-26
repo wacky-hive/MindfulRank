@@ -138,6 +138,156 @@ const HomePage = () => {
         }}></div>
       </section>
 
+      {/* Auto-Discovery Feature Showcase */}
+      <section className="section-modern bg-light">
+        <Container className="container-modern">
+          <Row className="justify-content-center text-center mb-5">
+            <Col lg={8}>
+              <div className="glass-card d-inline-flex align-items-center px-4 py-2 mb-4">
+                <FaMagic className="react-icon icon-left text-primary" />
+                <span className="fw-bold text-primary">Game-Changing Auto-Discovery</span>
+              </div>
+              <h2 className="text-5xl fw-bold mb-4 slide-up">
+                <span className="text-gradient-dark">Tier-Based Auto-Discovery</span> Saves Hours of Manual Work
+              </h2>
+              <p className="text-xl text-muted mb-5 slide-up" style={{ animationDelay: '0.2s' }}>
+                Our revolutionary AI automatically scans and discovers your entire website structure with tier-based limits: Starter (100 pages), Professional (300 pages), Enterprise (unlimited)
+              </p>
+            </Col>
+          </Row>
+          
+          <Row className="g-4 mb-5">
+            <Col lg={6} className="slide-up" style={{ animationDelay: '0.4s' }}>
+              <Card className="card-modern h-100 border-0 shadow-lg">
+                <Card.Body className="p-5">
+                  <div className="d-flex align-items-center mb-4">
+                    <div className="feature-icon me-3">
+                      <FaSearch className="react-icon" style={{ fontSize: '1.5rem', color: 'white' }} />
+                    </div>
+                    <h4 className="text-2xl fw-bold mb-0">Smart Website Scanning</h4>
+                  </div>
+                  <p className="text-muted text-lg mb-4" style={{ lineHeight: '1.7' }}>
+                    Our AI crawls your entire website automatically, discovering every page, section, and piece of content without any manual intervention.
+                  </p>
+                  <ul className="text-muted text-lg" style={{ lineHeight: '1.8', listStyle: 'none', paddingLeft: '0' }}>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Complete Site Mapping:</strong> Discovers all pages and content structure</span>
+                    </li>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Content Analysis:</strong> Identifies key topics, keywords, and themes</span>
+                    </li>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Priority Detection:</strong> Automatically ranks content importance</span>
+                    </li>
+                    <li className="d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Zero Manual Work:</strong> No need to manually list pages or content</span>
+                    </li>
+                  </ul>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg={6} className="slide-up" style={{ animationDelay: '0.6s' }}>
+              <Card className="card-modern h-100 border-0 shadow-lg">
+                <Card.Body className="p-5">
+                  <div className="d-flex align-items-center mb-4">
+                    <div className="feature-icon me-3">
+                      <FaRobot className="react-icon" style={{ fontSize: '1.5rem', color: 'white' }} />
+                    </div>
+                    <h4 className="text-2xl fw-bold mb-0">Intelligent Optimization</h4>
+                  </div>
+                  <p className="text-muted text-lg mb-4" style={{ lineHeight: '1.7' }}>
+                    The AI doesn't just discover content - it intelligently optimizes it for maximum AI model discoverability and understanding.
+                  </p>
+                  <ul className="text-muted text-lg" style={{ lineHeight: '1.8', listStyle: 'none', paddingLeft: '0' }}>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Smart Formatting:</strong> Structures content for optimal AI consumption</span>
+                    </li>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Context Enhancement:</strong> Adds relevant metadata and descriptions</span>
+                    </li>
+                    <li className="mb-3 d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>SEO Integration:</strong> Incorporates existing SEO data seamlessly</span>
+                    </li>
+                    <li className="d-flex align-items-start">
+                      <FaCheckCircle className="react-icon text-success me-3 mt-1 flex-shrink-0" />
+                      <span><strong>Future-Proof Output:</strong> Adapts to evolving AI model requirements</span>
+                    </li>
+                  </ul>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* Time Savings Comparison */}
+          <Row className="justify-content-center slide-up" style={{ animationDelay: '0.8s' }}>
+            <Col lg={10}>
+              <Card className="card-modern overflow-hidden" style={{ 
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none'
+              }}>
+                <Card.Body className="p-5">
+                  <div className="text-center mb-4">
+                    <h3 className="text-3xl fw-bold mb-3">Massive Time Savings</h3>
+                    <p className="text-xl opacity-90">
+                      Compare the time investment: traditional manual work vs our auto-discovery
+                    </p>
+                  </div>
+                  
+                  <Row className="g-4">
+                    <Col md={6} className="text-center">
+                      <div className="glass-card p-4 h-100">
+                        <FaClock className="react-icon text-warning mb-3" style={{ fontSize: '2.5rem' }} />
+                        <h5 className="fw-bold mb-3">Manual Process</h5>
+                        <div className="text-4xl fw-bold text-warning mb-2">8-16 Hours</div>
+                        <ul className="text-start opacity-90" style={{ listStyle: 'none', paddingLeft: '0' }}>
+                          <li className="mb-2">• Manual page-by-page analysis</li>
+                          <li className="mb-2">• Content categorization</li>
+                          <li className="mb-2">• SEO data compilation</li>
+                          <li>• File structure planning</li>
+                        </ul>
+                      </div>
+                    </Col>
+                    
+                    <Col md={6} className="text-center">
+                      <div className="glass-card p-4 h-100">
+                        <FaMagic className="react-icon text-warning mb-3" style={{ fontSize: '2.5rem' }} />
+                        <h5 className="fw-bold mb-3">Auto-Discovery</h5>
+                        <div className="text-4xl fw-bold text-warning mb-2">2-5 Minutes</div>
+                        <ul className="text-start opacity-90" style={{ listStyle: 'none', paddingLeft: '0' }}>
+                          <li className="mb-2">• Instant website scanning</li>
+                          <li className="mb-2">• Automated content analysis</li>
+                          <li className="mb-2">• Smart optimization</li>
+                          <li>• Ready-to-deploy files</li>
+                        </ul>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <div className="text-center mt-4 p-4" style={{ background: 'rgba(255, 255, 255, 0.1)', borderRadius: '15px' }}>
+                    <h6 className="fw-bold mb-2 text-warning">🎯 Tier-Based Limits</h6>
+                    <p className="mb-0 opacity-90 text-lg">
+                      <strong>Starter:</strong> 100 pages • <strong>Professional:</strong> 300 pages • <strong>Enterprise:</strong> Unlimited pages
+                    </p>
+                    <p className="mb-0 opacity-90 text-sm mt-2">
+                      Choose the plan that fits your website size and scale as you grow.
+                    </p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
       {/* Benefits Comparison Section */}
       <section className="section-modern bg-light">
         <Container className="container-modern">

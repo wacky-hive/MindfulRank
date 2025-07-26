@@ -42,6 +42,7 @@ class LLMFile(Base):
     website_id = Column(Integer, ForeignKey("websites.id"), nullable=False)
     file_type = Column(String(50), nullable=False)  # e.g., 'llms_txt', 'llms_full_txt'
     content_path = Column(String(500), nullable=False)
+    file_size = Column(Integer, nullable=True)  # File size in bytes
     status = Column(String(50), default="pending")  # e.g., 'pending', 'generated', 'error'
     generated_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())

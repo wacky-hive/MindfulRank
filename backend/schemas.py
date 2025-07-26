@@ -50,8 +50,13 @@ class LLMFileBase(BaseModel):
 class LLMFileCreate(LLMFileBase):
     pass
 
-class LLMFileResponse(LLMFileBase):
+class LLMFileResponse(BaseModel):
     id: int
+    website_id: int
+    file_type: str
+    content_path: str
+    file_size: Optional[int] = None
+    status: str
     generated_at: datetime
     updated_at: datetime
 
