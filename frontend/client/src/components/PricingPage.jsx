@@ -492,8 +492,8 @@ const PricingPage = () => {
                   <FaGem style={{ fontSize: '1.5rem', color: 'white' }} />
                 </div>
                 <h4 className="fw-bold mb-2" style={{ color: 'var(--neutral-900)' }}>Enterprise</h4>
-                <div className="display-6 fw-bold text-warning mb-2">∞</div>
-                <p className="text-muted mb-0">Unlimited pages</p>
+                <div className="display-6 fw-bold text-warning mb-2">1,000</div>
+                <p className="text-muted mb-0">Pages per website</p>
                 <small className="text-muted">For large-scale websites</small>
               </Card>
             </Col>
@@ -826,12 +826,12 @@ const PricingPage = () => {
                       <FaMagic className="react-icon" style={{ color: 'var(--primary-600)' }} />
                     </div>
                     <div>
-                      <h5 className="fw-bold mb-3" style={{ color: 'var(--neutral-900)' }}>
-                        How does Auto-Discovery work?
-                      </h5>
-                      <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
-                        Auto-Discovery automatically scans your website and finds all important pages. Starter plan discovers up to 100 pages, Professional up to 300 pages, and Enterprise has unlimited discovery. Perfect for saving hours of manual work!
-                      </p>
+                                              <h5 className="fw-bold mb-3" style={{ color: 'var(--neutral-900)' }}>
+                          How does Auto-Discovery work?
+                        </h5>
+                        <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
+                          Auto-Discovery automatically scans your website and finds all important pages. Starter plan discovers up to 100 pages, Professional up to 300 pages, and Enterprise up to 1,000 pages. Perfect for saving hours of manual work!
+                        </p>
                     </div>
                   </div>
                 </Card.Body>

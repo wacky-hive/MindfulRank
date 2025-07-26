@@ -51,7 +51,7 @@ const GenerationForm = ({ websiteId, token, onGenerationStart, onCancel }) => {
                 setUrlsToFlatten(urls);
                 
                 // Show success message with plan info
-                const limitText = planInfo.limit === -1 ? 'unlimited' : planInfo.limit;
+                const limitText = planInfo.limit;
                 const planName = planInfo.plan.charAt(0).toUpperCase() + planInfo.plan.slice(1);
                 
                 await Swal.fire({

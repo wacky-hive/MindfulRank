@@ -151,7 +151,7 @@ const HomePage = () => {
                 <span className="text-gradient-dark">Tier-Based Auto-Discovery</span> Saves Hours of Manual Work
               </h2>
               <p className="text-xl text-muted mb-5 slide-up" style={{ animationDelay: '0.2s' }}>
-                Our revolutionary AI automatically scans and discovers your entire website structure with tier-based limits: Starter (100 pages), Professional (300 pages), Enterprise (unlimited)
+                Our revolutionary AI automatically scans and discovers your entire website structure with tier-based limits: Starter (100 pages), Professional (300 pages), Enterprise (1,000 pages)
               </p>
             </Col>
           </Row>
@@ -275,7 +275,7 @@ const HomePage = () => {
                   <div className="text-center mt-4 p-4" style={{ background: 'rgba(255, 255, 255, 0.1)', borderRadius: '15px' }}>
                     <h6 className="fw-bold mb-2 text-warning">🎯 Tier-Based Limits</h6>
                     <p className="mb-0 opacity-90 text-lg">
-                      <strong>Starter:</strong> 100 pages • <strong>Professional:</strong> 300 pages • <strong>Enterprise:</strong> Unlimited pages
+                      <strong>Starter:</strong> 100 pages • <strong>Professional:</strong> 300 pages • <strong>Enterprise:</strong> 1,000 pages
                     </p>
                     <p className="mb-0 opacity-90 text-sm mt-2">
                       Choose the plan that fits your website size and scale as you grow.

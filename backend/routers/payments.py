@@ -60,10 +60,10 @@ SUBSCRIPTION_PLANS = [
         "price": 9900,  # €99.00 in cents
         "interval": "year",
         "stripe_price_id": os.getenv("STRIPE_ENTERPRISE_PRICE_ID", "price_1Ro0JFJqPMD8922Qck6M42Tt"),  # Configurable Stripe price ID
-        "auto_discovery_limit": -1,  # Unlimited (-1 represents unlimited)
+        "auto_discovery_limit": 1000,  # Up to 1,000 pages per website
         "features": [
             "Unlimited websites",
-            "Unlimited auto-discovery pages per website",
+            "1,000 auto-discovery pages per website",
             "2,000 requests/hour",
             "50,000 requests/day", 
             "White-label options",
