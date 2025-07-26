@@ -100,10 +100,13 @@ const DashboardPage = ({ token }) => {
             // Count by type
             if (file.file_type === 'llms.txt') {
               filesByType['llms.txt']++;
-              totalSizeKB += 2.3; // Mock size
             } else if (file.file_type === 'llms_full.txt') {
               filesByType['llms_full.txt']++;
-              totalSizeKB += 45.7; // Mock size
+            }
+            
+            // Add real file size to total (convert bytes to KB)
+            if (file.file_size && file.file_size > 0) {
+              totalSizeKB += file.file_size / 1024;
             }
             
             // Add to recent activity
